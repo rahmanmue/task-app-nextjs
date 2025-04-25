@@ -146,6 +146,26 @@ exports.Prisma.TaskScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.GroupChatScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  message: 'message',
+  groupId: 'groupId',
+  senderId: 'senderId',
+  delivered: 'delivered',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PrivateChatScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  message: 'message',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  delivered: 'delivered',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.LogScalarFieldEnum = {
   id: 'id',
   action: 'action',
@@ -171,15 +191,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
-};
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
 };
 exports.Role = exports.$Enums.Role = {
   LEAD: 'LEAD',
@@ -210,6 +230,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   GroupTask: 'GroupTask',
   Task: 'Task',
+  GroupChat: 'GroupChat',
+  PrivateChat: 'PrivateChat',
   Log: 'Log'
 };
 
