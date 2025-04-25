@@ -25,7 +25,6 @@ export default function SignInPage() {
       await login({ username, password });
       router.push("/group-tasks");
     } catch (err) {
-      console.log("disinix", err);
       setError(getErrorMsg(err));
     } finally {
       setLoading(false);
