@@ -4,6 +4,26 @@ import { verifyAccess } from "@/lib/auth";
 import { AuthorizationError } from "@/exceptions/AuthorizationError";
 import { handleApiError } from "@/lib/handleApiError";
 
+export type User = {
+  id: string;
+  username: string;
+  fullname: string;
+  role: string;
+};
+
+const mapUsers = (users: User[]) => {
+  return users?.length !== 0
+    ? users.map(({ id, username, fullname, role }) => {
+        return {
+          id,
+          username,
+          fullname,
+          role,
+        };
+      })
+    : [];
+};
+
 export async function GET() {
   try {
     const { role } = await verifyAccess();
@@ -20,7 +40,7 @@ export async function GET() {
       {
         status: "success",
         message: "Success get users",
-        data: users,
+        data: mapUsers(users),
       },
       {
         status: 200,

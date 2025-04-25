@@ -2,15 +2,9 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verifyAccess } from "@/lib/auth";
 import { handleApiError } from "@/lib/handleApiError";
+import { User } from "../route";
 
-const mapUser = (
-  user: {
-    id: string;
-    username: string;
-    fullname: string;
-    role: string;
-  } | null
-) => {
+const mapUser = (user: User | null) => {
   return user
     ? {
         id: user.id,
