@@ -15,25 +15,29 @@ datasource db {
 }
 
 model User {
-  id                String      @id @default(uuid())
-  username          String      @unique
-  fullname          String
-  password          String
-  role              Role        @default(TEAM)
-  ledGroups         GroupTask[] @relation("UserLedGroups")
-  assignedTeamTasks Task[]      @relation("UserAssignedTasks")
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
+  id                      String          @id @default(uuid())
+  username                String          @unique
+  fullname                String
+  password                String
+  role                    Role            @default(TEAM)
+  ledGroups               GroupTask[]     @relation("UserLedGroups")
+  assignedTeamTasks       Task[]          @relation("UserAssignedTasks")
+  groupMessagesSent       GroupChat[]     @relation("UserChats") 
+  privateMessagesSent     PrivateChat[]   @relation("PrivateChatSender") 
+  privateMessagesReceived PrivateChat[]   @relation("PrivateChatReceiver")
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
 }
 
 model GroupTask {
-  id        String   @id @default(uuid())
+  id        String        @id @default(uuid())
   name      String
   leadId    String
-  lead      User     @relation("UserLedGroups", fields: [leadId], references: [id])
-  tasks     Task[]   @relation("GroupTasks")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  lead      User          @relation("UserLedGroups", fields: [leadId], references: [id])
+  tasks     Task[]        @relation("GroupTasks")
+  chats     GroupChat[]   @relation("GroupChats")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
 model Task {
@@ -47,6 +51,30 @@ model Task {
   user        User       @relation("UserAssignedTasks", fields: [userTeamId], references: [id])
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+}
+
+model GroupChat {
+  id        String     @id @default(uuid())
+  username  String
+  message   String
+  groupId   String
+  senderId  String?
+  group     GroupTask  @relation("GroupChats", fields: [groupId], references: [id], onDelete: Cascade)
+  sender    User?      @relation("UserChats",  fields: [senderId], references: [id], onDelete: SetNull)
+  delivered Boolean      
+  createdAt DateTime   @default(now())
+}
+
+model PrivateChat {
+  id         String    @id @default(uuid())
+  username   String
+  message    String
+  senderId   String
+  receiverId String?
+  sender     User      @relation("PrivateChatSender",   fields: [senderId],   references: [id])
+  receiver   User?     @relation("PrivateChatReceiver", fields: [receiverId], references: [id], onDelete: SetNull)
+  delivered  Boolean      
+  createdAt  DateTime  @default(now())
 }
 
 model Log {
