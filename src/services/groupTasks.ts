@@ -1,3 +1,18 @@
+export const getUserInGroup = async (groupId: string) => {
+  const response = await fetch(`/api/groups/${groupId}/chats`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed get users by groip");
+  }
+
+  return data;
+};
+
 export const getGroups = async () => {
   const response = await fetch("/api/groups", {
     method: "GET",
