@@ -10,7 +10,7 @@ import CardTask from "@/components/Task/CardTask";
 import CardEditTask from "@/components/Task/CardEditTask";
 import { getStatusColor } from "@/lib/getStatusColor";
 import Image from "next/image";
-import { LayoutList, Trash2 } from "lucide-react";
+import { LayoutList, MessageCircleMore, Trash2 } from "lucide-react";
 import Navbar from "@/components/Nav/Navbar";
 
 export type Task = {
@@ -122,6 +122,12 @@ export default function Tasks() {
   return (
     <>
       <Navbar />
+      <Link
+        href={`/chats/${params.groupId}`}
+        className="absolute right-5 bottom-5 text-center cursor-pointer p-5 w-fit rounded-full border-2 bg-green-500 hover:bg-green-600 text-white text-md font-medium"
+      >
+        <MessageCircleMore />
+      </Link>
       <div className="flex flex-col mt-8 mb-5 items-center h-[90vh]">
         <h1 className="text-4xl font-semibold mb-2">Tasks</h1>
         {role === "LEAD" ? (
@@ -136,7 +142,7 @@ export default function Tasks() {
             Semua Task Kamu Yang Telah Di Assign Oleh Lead
           </p>
         )}
-        <div className="w-1/5"></div>
+
         {error && (
           <p className="text-red-500 text-sm font-medium px-3 my-3 bg-red-100 py-4 rounded-md">
             <span className="font-bold">Error!</span> : {error}
